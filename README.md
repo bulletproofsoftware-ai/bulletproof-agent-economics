@@ -2,6 +2,8 @@
 
 **Cost metering, budget enforcement, model routing, and chargeback for multi-agent systems.**
 
+![bulletproof-agent-economics — overview](docs/media/infographic.png)
+
 `bulletproof-agent-economics` tracks what your agents cost, enforces budgets, routes
 requests to the most cost-effective model tier, and produces chargeback/ROI reports.
 It's a TypeScript service backed by Postgres + Redis, with a dashboard.
@@ -54,6 +56,21 @@ npm install
 npx tsc --noEmit     # typecheck
 npx vitest run       # tests
 ```
+
+## Documentation
+
+- [docs/OVERVIEW.md](docs/OVERVIEW.md) — what it is and how it fits together.
+- [docs/INSTALL.md](docs/INSTALL.md) — local + Docker setup.
+- [docs/HOW-TO-USE.md](docs/HOW-TO-USE.md) — the REST/WebSocket API and dashboard.
+- [docs/ADMINISTRATOR.md](docs/ADMINISTRATOR.md) — configuration, auth, budgets, ops.
+- [docs/SBOM.md](docs/SBOM.md) — software bill of materials.
+- [docs/scan/scan-report.md](docs/scan/scan-report.md) — security scan (0 critical / 0 high).
+
+## Media
+
+Generated overview media (NotebookLM) lives in [`media/`](media/): a slide deck,
+an explainer video, and a briefing document. The overview infographic is in
+[`docs/media/`](docs/media/).
 
 ## License
 
