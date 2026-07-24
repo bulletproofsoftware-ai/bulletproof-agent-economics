@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+*.db
+*.db-wal
+*.db-shm
+coverage/
+.vitest/
+*.tgz
+.DS_Store
+fallback-events/
