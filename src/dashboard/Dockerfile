@@ -5,16 +5,23 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-FROM nginx:alpine
+# nginx-unprivileged runs as the non-root `nginx` user (UID 101) and listens on
+# 8080 by default — no root needed at runtime (dockle DS-0002 / opengrep
+# missing-user). Same envsubst-on-/etc/nginx/templates entrypoint as nginx:alpine.
+FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Template config — ${ECONOMICS_DASHBOARD_TOKEN} is substituted at container start
-# by Docker's nginx entrypoint (envsubst on /etc/nginx/templates/*.conf.template)
-RUN mkdir -p /etc/nginx/templates && rm -f /etc/nginx/conf.d/default.conf
+# by Docker's nginx entrypoint (envsubst on /etc/nginx/templates/*.conf.template).
+# The base image already provisions /etc/nginx/templates; only clear the default
+# server block that would otherwise also listen on 8080.
+USER root
+RUN rm -f /etc/nginx/conf.d/default.conf
+USER nginx
 COPY <<'EOF' /etc/nginx/templates/default.conf.template
 map $http_upgrade $connection_upgrade { default upgrade; "" close; }
 server {
-  listen 80;
+  listen 8080;
   root /usr/share/nginx/html;
   index index.html;
 
@@ -48,5 +55,5 @@ server {
 }
 EOF
 
-EXPOSE 80
+EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]

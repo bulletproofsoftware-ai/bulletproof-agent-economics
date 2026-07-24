@@ -27,14 +27,18 @@ RUN npx tsc
 # --- Migrations ---
 FROM base AS migrations
 WORKDIR /app
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/migrations ./migrations
+COPY --from=build --chown=node:node /app/dist ./dist
+COPY --from=build --chown=node:node /app/migrations ./migrations
+# Drop root — the node:20-alpine base image ships a non-root `node` user.
+USER node
 CMD ["node", "dist/run-migrations.js"]
 
 # --- API ---
 FROM base AS api
 WORKDIR /app
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/migrations ./migrations
+COPY --from=build --chown=node:node /app/dist ./dist
+COPY --from=build --chown=node:node /app/migrations ./migrations
+# Drop root — the node:20-alpine base image ships a non-root `node` user.
+USER node
 EXPOSE 8097
 CMD ["node", "dist/api/server.js"]
