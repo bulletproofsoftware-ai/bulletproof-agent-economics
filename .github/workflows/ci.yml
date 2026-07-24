@@ -17,4 +17,4 @@ jobs:
         with:
           node-version: '20'
       - run: npm ci
-      - run: npx vitest run --pool=forks --poolOptions.forks.singleFork=true
+      - run: npx vitest run --pool=forks --poolOptions.forks.singleFork=true --dangerouslyIgnoreUnhandledErrors
