@@ -83,8 +83,8 @@ export const MODEL_PRICING: Record<ModelTier, ModelPricing> = {
     output_cents_per_million: 0,
     cache_read_cents_per_million: 0,
   },
-  // REQ-057: Fable — placeholder rate matched to opus until Marc confirms
-  // actual Fable API pricing. Flagged, not guessed silently (spec §7 open item).
+  // REQ-057: Fable — placeholder rate matched to opus until actual Fable API
+  // pricing is confirmed. Flagged, not guessed silently (spec §7 open item).
   fable: {
     model_id: 'claude-fable-5',
     tier: 'fable',
@@ -92,7 +92,7 @@ export const MODEL_PRICING: Record<ModelTier, ModelPricing> = {
     output_cents_per_million: 7500,
     cache_read_cents_per_million: 150,
   },
-  // REQ-057: Local Ollama — free, runs on Marc's own hardware.
+  // REQ-057: Local Ollama — free, runs on the operator's own hardware.
   'ollama-local': {
     model_id: 'ollama-local',
     tier: 'ollama-local',

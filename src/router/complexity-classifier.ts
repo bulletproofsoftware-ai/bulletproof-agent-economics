@@ -136,9 +136,9 @@ function estimateTokenCount(text: string): number {
  * REQ-057 (2026-07-02): narrowed from a broad verb list ("analyze", "debug",
  * "optimize", "plan", "investigate", "compare", "evaluate" — all common in
  * routine, everyday requests) down to signals that reliably indicate
- * genuinely high-stakes or architecture-level work. Marc's subscription is
- * metered by usage, not a flat-rate API budget: auto-escalating to Opus on
- * generic verbs was quietly burning subscription capacity on routine tasks.
+ * genuinely high-stakes or architecture-level work. Metered-usage plans have
+ * no flat-rate API budget: auto-escalating to Opus on generic verbs was
+ * quietly burning subscription capacity on routine tasks.
  * Sonnet is the correct default for most real work; Opus/Fable are reserved
  * for tasks that actually warrant them (explicit signal, or one of these
  * narrow high-stakes markers, or the existing hard thresholds below).

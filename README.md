@@ -25,6 +25,7 @@ It's a TypeScript service backed by Postgres + Redis, with a dashboard.
 ```bash
 npm install
 cp .env.example .env          # set DATABASE_URL, REDIS_URL, ECONOMICS_JWT_SECRET
+npm run build                 # compile TypeScript
 npm run migrate               # apply SQL migrations
 npm start                     # API on ECONOMICS_PORT (default 8097)
 ```

@@ -9,11 +9,11 @@ Everything is env-driven. Full reference: [`.env.example`](../.env.example) and
 
 | Var | Default | Purpose |
 |-----|---------|---------|
-| `DATABASE_URL` | `postgresql://postgres:password@localhost:5437/postgres` | Authoritative cost ledger. |
+| `DATABASE_URL` | `postgresql://postgres:password@localhost:5432/postgres` | Authoritative cost ledger. |
 | `REDIS_URL` | `redis://localhost:6379` | Live counters + pub/sub. |
 | `ECONOMICS_PORT` | `8097` | API + WebSocket port. |
 | `DASHBOARD_PORT` | `8098` | Referenced for CORS origin. |
-| `AUDIT_DB_PATH` | `~/.claude/plugins/local/governance/state/audit.db` | Governance audit-bus SQLite file. |
+| `AUDIT_DB_PATH` | `./data/audit.db` | Governance audit-bus SQLite file. |
 
 ### Authentication
 

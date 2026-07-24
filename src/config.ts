@@ -37,7 +37,7 @@ export const config = {
   // PostgreSQL
   databaseUrl: env(
     'DATABASE_URL',
-    'postgresql://postgres:password@localhost:5437/postgres',
+    'postgresql://postgres:password@localhost:5432/postgres',
   ),
 
   // Redis
@@ -45,12 +45,7 @@ export const config = {
   redisKeyPrefix: 'econ:',
 
   // Governance Audit Bus
-  auditDbPath: resolveHome(
-    env(
-      'AUDIT_DB_PATH',
-      '~/.claude/plugins/local/governance/state/audit.db',
-    ),
-  ),
+  auditDbPath: resolveHome(env('AUDIT_DB_PATH', './data/audit.db')),
 
   // Qdrant
   qdrantUrl: env('QDRANT_URL', 'http://localhost:6334'),
