@@ -48,8 +48,18 @@ router.get('/projects/:id', authMiddleware, async (req, res) => {
 router.get('/projects/:id/budget', authMiddleware, async (req, res) => {
   try {
     const id = req.params.id as string;
+    // Columns are listed explicitly rather than SELECT *: budget_configs
+    // holds webhook_secret and slack_webhook_url, and this endpoint is
+    // readable by any authenticated caller including viewers, so a wildcard
+    // select handed out the alerting credentials with the budget.
     const configResult = await query(
-      `SELECT * FROM budget_configs WHERE scope_type = 'project' AND scope_id = $1`,
+      `SELECT id, scope_type, scope_id, cap_cents, period_type,
+              threshold_monitor_pct, threshold_warn_pct,
+              threshold_throttle_pct, threshold_pause_pct,
+              inheritance_strategy, agent_weights, alert_channels,
+              email_recipients, created_by, created_at, updated_at
+         FROM budget_configs
+        WHERE scope_type = 'project' AND scope_id = $1`,
       [id],
     );
     const budget = await getProjectBudget(id);

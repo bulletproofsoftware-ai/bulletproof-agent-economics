@@ -93,7 +93,16 @@ export class WebSocketManager {
     req: IncomingMessage,
     callback: (result: boolean, code?: number, message?: string) => void,
   ): void {
-    // Skip auth if no JWT secret configured (development mode)
+    // In production the JWT secret is mandatory — refuse the connection
+    // rather than granting admin. authMiddleware already enforces this for
+    // HTTP; without the same check here an unset secret handed every
+    // WebSocket client a dev-user admin identity in a deployed environment.
+    if (!config.jwtSecret && process.env.NODE_ENV === 'production') {
+      callback(false, 500, 'Server misconfiguration: JWT secret not set');
+      return;
+    }
+
+    // Skip auth only in development mode when no JWT secret is configured
     if (!config.jwtSecret) {
       (req as IncomingMessage & { user?: AuthPayload }).user = {
         sub: 'dev-user',
