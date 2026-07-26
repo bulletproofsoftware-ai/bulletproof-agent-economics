@@ -1,4 +1,4 @@
-FROM node:20-alpine AS build
+FROM node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
@@ -8,7 +8,7 @@ RUN npm run build
 # nginx-unprivileged runs as the non-root `nginx` user (UID 101) and listens on
 # 8080 by default — no root needed at runtime (dockle DS-0002 / opengrep
 # missing-user). Same envsubst-on-/etc/nginx/templates entrypoint as nginx:alpine.
-FROM nginxinc/nginx-unprivileged:alpine
+FROM nginxinc/nginx-unprivileged:alpine@sha256:18d67281256ded39ff65e010ae4f831be18f19356f83c60bc546492c7eb6dd23
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Template config — ${ECONOMICS_DASHBOARD_TOKEN} is substituted at container start
