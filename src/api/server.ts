@@ -6,6 +6,7 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import { createServer } from 'node:http';
 import { config } from '../config.js';
 
@@ -38,9 +39,30 @@ import { MeteringEngine } from '../metering/metering-engine.js';
 export function createApp() {
   const app = express();
 
-  // Security headers
+  // Security headers. The previous `contentSecurityPolicy: false` disabled the
+  // header outright; this service returns JSON and never HTML, so the correct
+  // policy is one that permits nothing at all rather than none at all.
   app.use(helmet({
-    contentSecurityPolicy: false, // Allow API clients
+    contentSecurityPolicy: {
+      useDefaults: false,
+      directives: {
+        'default-src': ["'none'"],
+        'frame-ancestors': ["'none'"],
+        'base-uri': ["'none'"],
+        'form-action': ["'none'"],
+      },
+    },
+  }));
+
+  // Rate limiting. Every /economics route reaches Postgres and several run
+  // aggregate queries, so an unthrottled caller can exhaust the pool. Applied
+  // before the routers so it covers the unauthenticated health route too.
+  app.use('/economics', rateLimit({
+    windowMs: 60_000,
+    limit: Number(process.env.RATE_LIMIT_PER_MINUTE ?? 120),
+    standardHeaders: 'draft-7',
+    legacyHeaders: false,
+    message: { error: 'rate limit exceeded' },
   }));
 
   // CORS
