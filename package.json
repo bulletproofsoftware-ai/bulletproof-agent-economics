@@ -16,7 +16,7 @@
     "typecheck": "tsc --noEmit"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.0.0"
   },
   "dependencies": {
     "better-sqlite3": "^13.0.1",
