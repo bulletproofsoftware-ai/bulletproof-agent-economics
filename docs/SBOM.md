@@ -37,7 +37,7 @@ Apache-2.0 / BSD-3-Clause / MIT-0). No copyleft licenses are present.
 | `jsonwebtoken` | 9.0.3 | MIT |
 | `nodemailer` | 9.0.3 | MIT-0 |
 | `pg` | 8.22.0 | MIT |
-| `uuid` | 10.0.0 | MIT |
+| `uuid` | 14.0.1 | MIT |
 | `ws` | 8.21.1 | MIT |
 | `zod` | 3.25.76 | MIT |
 
